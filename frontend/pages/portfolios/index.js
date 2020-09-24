@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Portfolios = () => {
+const Portfolios = (props) => {
     return (
         <div>
             <div className="container">
@@ -58,6 +58,10 @@ const Portfolios = () => {
         </div>
 
     )
+};
+
+Portfolios.getInitialProps = () => {
+    return { test: 'Test' }
 };
 
 export default Portfolios;
