@@ -11,8 +11,8 @@ const portfolioMutations = {
                 location: "2222"
                 jobTitle: "2222"
                 description: "2222"
-                startDate: "15/02/2020"
-                endDate: "17/02/2020"
+                startDate: "2012-12-12T23:59Z"
+                endDate: "2020-12-12T23:59Z"
 
             }) {
                 _id
