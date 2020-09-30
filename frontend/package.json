@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon server/index.js",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "populateDB": "node server/fakeDB/populate.js"
   },
   "author": "nesteemusic@gmail.com",
   "license": "ISC",
@@ -19,12 +20,13 @@
     "express-graphql": "^0.11.0",
     "graphql": "^15.3.0",
     "isomorphic-unfetch": "^3.0.0",
+    "mongoose": "^5.10.7",
     "next": "^9.5.3",
+    "next-with-apollo": "latest",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0-beta.16",
-    "react-dom": "^16.13.1",
-    "next-with-apollo": "latest"
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

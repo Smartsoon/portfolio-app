@@ -14,7 +14,7 @@ module.exports.portfolioTypes = gql`
         }
         
     input PortfolioInput {
-        title: String
+            title: String
             company: String
             companyWebsite: String
             location: String
@@ -25,7 +25,6 @@ module.exports.portfolioTypes = gql`
         }
         
     type Query {
-            hello: String
             portfolio(id: ID): Portfolio
             portfolios: [Portfolio]
         }

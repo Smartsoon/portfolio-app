@@ -10,6 +10,8 @@ const handle = app.getRequestHandler();
 const { portfolioMutations, portfolioQueries } = require('./graphql/resolvers/index');
 const { portfolioTypes } = require('./graphql/types/index');
 
+require('./db').dbConnect();
+
 app.prepare().then(() => {
     const server = express();
 
