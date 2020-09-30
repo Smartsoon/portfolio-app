@@ -1,6 +1,21 @@
 import React from 'react';
+import Link from 'next/link';
+import withApollo from '@/hoc/withApollo'
+import { getDataFromTree } from "@apollo/client/react/ssr";
 
-const Portfolios = (props) => {
+import { useGetPortfolio, useCreatePortfolio ,useUpdatePortfolio, useDeletePortfolio } from '@/apollo/actions/index'
+import PortfolioCard from "@/components/portfolio";
+
+
+const Portfolios = () => {
+
+    const { data, loading, error } = useGetPortfolio();
+    const [createPortfolio] = useCreatePortfolio();
+    const [updatePortfolio] = useUpdatePortfolio();
+    const [deletePortfolio] = useDeletePortfolio();
+
+    const portfolios = data && data.portfolios || [];
+
     return (
         <div>
             <div className="container">
@@ -10,48 +25,37 @@ const Portfolios = (props) => {
                             <h1>Portfolios</h1>
                         </div>
                     </div>
+                    <button
+                            onClick={createPortfolio}
+                            className="btn btn-primary">
+                        Create Portfolio
+                    </button>
                 </section>
                 <section className="pb-5">
                     <div className="row">
-                        <div className="col-md-4">
-                            <div className="card subtle-shadow no-border">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                    <p className="card-text fs-2">Some quick example text to build on the card title and
-                                        make up the bulk of the card's content.</p>
+                        {portfolios.map(portfolio => {
+                            return (
+                                <div key={portfolio._id} className="col-md-4">
+                                    <Link href="/portfolios/[id]"
+                                          as={`/portfolios/${portfolio._id}`}>
+                                        <a className="card-link">
+                                            <PortfolioCard portfolio={portfolio}/>
+                                        </a>
+                                    </Link>
+                                    <button
+                                        onClick={() => updatePortfolio({ variables: { id: portfolio._id } })}
+                                        className="btn btn-info">
+                                        Update Portfolio
+                                    </button>
+                                    <button
+                                        onClick={() => deletePortfolio({ variables: { id: portfolio._id } })}
+                                        className="btn btn-danger">
+                                        Delete Portfolio
+                                    </button>
                                 </div>
-                                <div className="card-footer no-border">
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card subtle-shadow no-border">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                    <p className="card-text fs-2 ">Some quick example text to build on the card title
-                                        and make up the bulk of the card's content.</p>
-                                </div>
-                                <div className="card-footer no-border">
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card subtle-shadow no-border">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                    <p className="card-text fs-2 ">Some quick example text to build on the card title
-                                        and make up the bulk of the card's content.</p>
-                                </div>
-                                <div className="card-footer no-border">
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </div>
-                            </div>
-                        </div>
+                            )
+                        })
+                        }
                     </div>
                 </section>
             </div>
@@ -60,8 +64,4 @@ const Portfolios = (props) => {
     )
 };
 
-Portfolios.getInitialProps = () => {
-    return { test: 'Test' }
-};
-
-export default Portfolios;
+export default withApollo(Portfolios, { getDataFromTree });
