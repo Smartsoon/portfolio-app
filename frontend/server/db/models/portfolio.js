@@ -10,7 +10,8 @@ const portfolioSchema = new Schema({
     description: { type: String, required: true, minLength: 5 },
     startDate: { type: Date, required: true },
     endDate: Date,
-    createdAt: { type: Date, default: Date.now() }
+    createdAt: { type: Date, default: Date.now() },
+    user: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('Portfolio', portfolioSchema);
