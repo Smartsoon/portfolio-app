@@ -3,7 +3,7 @@ const next = require('next');
 const {ApolloServer, gql} = require('apollo-server-express');
 const mongoose = require('mongoose');
 
-const {portfolioMutations, portfolioQueries, userMutations} = require('./graphql/resolvers/index');
+const {portfolioMutations, portfolioQueries, userMutations, authQueries} = require('./graphql/resolvers/index');
 const {portfolioTypes, userTypes} = require('./graphql/types/index');
 const { buildAuthContext } = require('./graphql/context/index');
 
@@ -31,7 +31,8 @@ app.prepare().then(() => {
 
     const resolvers = {
         Query: {
-            ...portfolioQueries
+            ...portfolioQueries,
+            ...authQueries
         },
         Mutation: {
             ...portfolioMutations,

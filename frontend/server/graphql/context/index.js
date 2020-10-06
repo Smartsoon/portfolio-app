@@ -6,7 +6,7 @@ const authenticateUser = (req, options) => {
         // Here we will get user if it authenticated
         const done = (err, user) => {
             if (err) {
-                rej(err)
+                return rej(new Error(err));
             }
             // If we will get user here we can save session to db
             if (user) {

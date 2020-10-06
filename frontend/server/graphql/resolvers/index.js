@@ -7,6 +7,12 @@ module.exports.portfolioQueries = {
     },
 };
 
+module.exports.authQueries = {
+    user: (root, args, ctx) => {
+        return ctx.models.User.getAuthUser(ctx)
+    },
+};
+
 module.exports.portfolioMutations = {
     createPortfolio: async (root, {input}, ctx) => {
         const createdPortfolio = await ctx.models.Portfolio.createOne(input);
@@ -38,4 +44,6 @@ module.exports.userMutations = {
         return ctx.models.User.signOut(ctx);
     }
 };
+
+
 

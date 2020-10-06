@@ -1,40 +1,28 @@
 import React from 'react';
+import withApollo from '@/hoc/withApollo'
+import { getDataFromTree } from "@apollo/client/react/ssr";
+import LoginForm from "../components/forms/loginForm";
+import { useSignIn } from '../apollo/actions/index';
+import Redirect from '@/components/shared/redirect'
 
 const Login = () => {
+
+    const [ signIn, { data, loading, error } ] = useSignIn();
+
+    const errorMessage = (error) => {
+        return (error.graphQLErrors && error.graphQLErrors[0].message) || 'Oops... Something went wrong!'
+    };
+
     return (
         <div>
             <div className="container">
-                <section className="section-title">
-                    <div className="px-2">
-                        <div className="pt-5 pb-4">
-                            <h1>Login Page</h1>
-                        </div>
-                    </div>
-                </section>
-                <div className="bwm-form">
+                <div className="bwm-form mt-5">
                     <div className="row">
                         <div className="col-md-5 mx-auto">
                             <h1 className="page-title">Login</h1>
-                            <form>
-                                <div className="form-group">
-                                    <label htmlFor="email">Email</label>
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        id="email"/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="password">Password</label>
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        id="password"/>
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="btn btn-main bg-blue py-2 ttu">Submit
-                                </button>
-                            </form>
+                            <LoginForm loading={loading} onSubmit={(signInData) => signIn({ variables: signInData })}/>
+                            { data && data.signIn && <Redirect to="/"/> }
+                            { error && <div className="alert alert-danger">{errorMessage(error)}</div> }
                         </div>
                     </div>
                 </div>
@@ -44,4 +32,4 @@ const Login = () => {
     )
 };
 
-export default Login;
+export default withApollo(Login, { getDataFromTree });

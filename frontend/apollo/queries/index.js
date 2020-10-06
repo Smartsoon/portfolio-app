@@ -30,8 +30,7 @@ const portfolioQueries = {
                 endDate
             }
         }
-    `
-
+    `,
 };
 
 export default portfolioQueries;

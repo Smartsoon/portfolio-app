@@ -27,6 +27,8 @@ module.exports.portfolioTypes = gql`
     type Query {
         portfolio(id: ID): Portfolio
         portfolios: [Portfolio]
+        
+        user: User
     }
 
     type Mutation {
