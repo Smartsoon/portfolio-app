@@ -21,7 +21,7 @@ exports.init = (passport) => {
 
             // First param of done is "error", second one for user
             if (err) {
-                return done(err)
+                throw err
             }
             if (!user) {
                 return done(null, false)
@@ -30,16 +30,14 @@ exports.init = (passport) => {
             // TODO: Check user password if its matching password from options
             user.validatePassword(password, (err, isMatching) => {
                 if (err) {
-                    return done(err)
+                    throw err
                 }
                 if (!isMatching) {
                     done(null, false)
                 }
 
-                done(null, user)
+                return done(null, user)
             });
-
-            return done(null, user)
         });
     }))
 };

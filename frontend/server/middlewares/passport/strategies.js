@@ -11,22 +11,22 @@ class GraphQLStrategy extends Strategy {
         if (!verify) {
             throw new Error('GraphQL strategy requires a verify callback')
         }
-        this.verify =verify;
+        this.verify = verify;
         this.name = 'graphql'
     }
 
     authenticate(_, options) {
         // in done we receive "error" "user" "info"
-        const done = (error, user) => {
+        const done = (error, user, info) => {
             // if user then call "success" otherwise call "fail" of "error"
             if (error) {
-                return this.error
+                return this.error(error)
             }
             if (!user) {
                 return this.fail(401)
             }
 
-            return this.success(user)
+            return this.success(user, info)
         };
         this.verify(options, done)
     }

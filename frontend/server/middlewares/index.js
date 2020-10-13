@@ -1,5 +1,4 @@
 const config = require('../config/dev');
-const cookieParser = require('cookie-parser')
 const session = require('express-session');
 const passport = require('passport');
 
@@ -16,8 +15,6 @@ exports.init = (server, db) => {
         saveUninitialized: false,
         store: db.initSessionStore()
     };
-
-    server.use(cookieParser());
 
     server.use(session(sess));
 

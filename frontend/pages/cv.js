@@ -1,10 +1,11 @@
 import React from 'react';
+import BaseLayout from '@/layouts/baseLayout'
 
 const Cv = () => {
     return (
-        <div>
+        <BaseLayout>
             cv
-        </div>
+        </BaseLayout>
     )
 };
 

@@ -14,13 +14,13 @@ module.exports.portfolioTypes = gql`
     }
 
     input PortfolioInput {
-        title: String
-        company: String
-        companyWebsite: String
-        location: String
-        jobTitle: String
-        description: String
-        startDate: String
+        title: String!
+        company: String!
+        companyWebsite: String!
+        location: String!
+        jobTitle: String!
+        description: String!
+        startDate: String!
         endDate: String
     }
 
@@ -28,6 +28,7 @@ module.exports.portfolioTypes = gql`
         portfolio(id: ID): Portfolio
         portfolios: [Portfolio]
         
+        userPortfolios: [Portfolio]
         user: User
     }
 

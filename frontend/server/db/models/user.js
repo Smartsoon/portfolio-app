@@ -17,7 +17,7 @@ const userSchema = new Schema({
     },
     name: {
         type: String,
-        minLength: [6, 'Minimum length is 6 characters'],
+        minLength: [6, 'Minimum length is 6 characters']
     },
     username: {
         type: String,
@@ -59,13 +59,12 @@ userSchema.pre('save', function(next) {
     });
 });
 
-userSchema.methods.validatePassword = function(password, validationCallback) {
-    const user = this;
-    bcrypt.compare(password, user.password, (error, isSuccess) => {
+userSchema.methods.validatePassword = function(password, done) {
+    bcrypt.compare(password, this.password, function(error, isSuccess) {
         if (error) {
-            return validationCallback(error)
+            return done(error)
         }
-        return validationCallback(null, isSuccess)
+        done(null, isSuccess)
     })
 };
 

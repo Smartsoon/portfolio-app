@@ -1,4 +1,5 @@
 import React from 'react';
+import {formatDate} from "../utils/functions";
 
 const PortfolioCard = ({portfolio}) => {
     return (
@@ -9,7 +10,7 @@ const PortfolioCard = ({portfolio}) => {
                 <p className="card-text fs-2">{portfolio.description}</p>
             </div>
             <div className="card-footer no-border">
-                <small className="text-muted">{portfolio.startDate} - {portfolio.endDate}</small>
+                <small className="text-muted">{formatDate(portfolio.startDate)} - {portfolio.endDate ? formatDate(portfolio.endDate) : 'Still working...'}</small>
             </div>
         </div>
     )

@@ -3,16 +3,25 @@ import { gql } from '@apollo/client';
 
 const portfolioMutations = {
     CREATE_PORTFOLIO: gql`
-        mutation createPortfolio {
+        mutation createPortfolio(
+                $title: String!
+                $company: String!
+                $companyWebsite: String!
+                $location: String!
+                $jobTitle: String!
+                $description: String!
+                $startDate: String!
+                $endDate: String
+        ) {
             createPortfolio( input: {
-                title: "2222"
-                company: "2222"
-                companyWebsite: "2222"
-                location: "2222"
-                jobTitle: "2222"
-                description: "2222"
-                startDate: "2012-12-12T23:59Z"
-                endDate: "2020-12-12T23:59Z"
+                title: $title
+                company: $company
+                companyWebsite: $companyWebsite
+                location: $location
+                jobTitle: $jobTitle
+                description: $description
+                startDate: $startDate
+                endDate: $endDate
 
             }) {
                 _id
@@ -28,11 +37,26 @@ const portfolioMutations = {
         }
     `,
     UPDATE_PORTFOLIO: gql`
-        mutation updatePortfolio($id: ID) {
+        mutation updatePortfolio(
+            $id: ID
+            $title: String!
+            $company: String!
+            $companyWebsite: String!
+            $location: String!
+            $jobTitle: String!
+            $description: String!
+            $startDate: String!
+            $endDate: String
+        ) {
             updatePortfolio(id: $id, input: {
-                title: "2222"
-                company: "2222"
-                description: "2222"
+                title: $title
+                company: $company
+                companyWebsite: $companyWebsite
+                location: $location
+                jobTitle: $jobTitle
+                description: $description
+                startDate: $startDate
+                endDate: $endDate
             }) {
                 _id
                 title

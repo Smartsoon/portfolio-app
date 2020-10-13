@@ -14,7 +14,7 @@ const authenticateUser = (req, options) => {
                     if (err) {
                         return rej(new Error(err))
                     }
-                    res(user)
+                    return res(user)
                 });
             } else {
                 return rej(new Error('Invalid password or email'))
@@ -30,9 +30,7 @@ const authenticateUser = (req, options) => {
 
 exports.buildAuthContext = (req) => {
     const auth = {
-        authenticate: (options) => {
-            return authenticateUser(req, options)
-        },
+        authenticate: (options) => authenticateUser(req, options),
         logout: () => req.logout(),
         isAuthenticated: () => req.isAuthenticated(),
         getUser: () => req.user

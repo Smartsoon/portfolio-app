@@ -1,35 +1,51 @@
 import React from 'react';
 import withApollo from '@/hoc/withApollo'
-import { getDataFromTree } from "@apollo/client/react/ssr";
 import LoginForm from "../components/forms/loginForm";
-import { useSignIn } from '../apollo/actions/index';
+import {useSignIn} from '../apollo/actions/index';
 import Redirect from '@/components/shared/redirect'
+import BaseLayout from "../layouts/baseLayout";
+import duplicateLoginProtection from "../hoc/duplicateLoginProtection";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 const Login = () => {
-
-    const [ signIn, { data, loading, error } ] = useSignIn();
+    const [signIn, {data, loading, error}] = useSignIn();
+    const router = useRouter();
 
     const errorMessage = (error) => {
-        return (error.graphQLErrors && error.graphQLErrors[0].message) || 'Oops... Something went wrong!'
+        return (error.graphQLErrors && <div className="d-none">{toast.error(error.graphQLErrors[0].message, {autoClose: 3000})}</div>
+            ||
+            <div className="d-none">{toast.error("Oops... Something went wrong!", {autoClose: 3000})}</div>
+        )};
+
+    const handleSignIn = async (signInData) => {
+        try {
+            await signIn({variables: signInData});
+            await router.push('/');
+            toast.success('You successfully logged in!', {autoClose: 3000})
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     return (
-        <div>
-            <div className="container">
-                <div className="bwm-form mt-5">
-                    <div className="row">
-                        <div className="col-md-5 mx-auto">
-                            <h1 className="page-title">Login</h1>
-                            <LoginForm loading={loading} onSubmit={(signInData) => signIn({ variables: signInData })}/>
-                            { data && data.signIn && <Redirect to="/"/> }
-                            { error && <div className="alert alert-danger">{errorMessage(error)}</div> }
+        <BaseLayout>
+            <div>
+                <div className="container">
+                    <div className="bwm-form mt-5">
+                        <div className="row">
+                            <div className="col-md-5 mx-auto">
+                                <h1 className="page-title">Login</h1>
+                                <LoginForm loading={loading}
+                                           onSubmit={handleSignIn}/>
+                                {error && errorMessage(error)}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
+        </BaseLayout>
     )
 };
 
-export default withApollo(Login, { getDataFromTree });
+export default withApollo(duplicateLoginProtection(Login));

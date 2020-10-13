@@ -1,23 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import withApollo from '@/hoc/withApollo'
-import { getDataFromTree } from "@apollo/client/react/ssr";
+import {getDataFromTree} from "@apollo/client/react/ssr";
 
-import { useGetPortfolio, useCreatePortfolio ,useUpdatePortfolio, useDeletePortfolio } from '@/apollo/actions/index'
+import {useGetPortfolio} from '@/apollo/actions/index'
 import PortfolioCard from "@/components/portfolio";
+import AppLink from "../../components/shared/appLink";
+import BaseLayout from "../../layouts/baseLayout";
 
 
 const Portfolios = () => {
-
-    const { data, loading, error } = useGetPortfolio();
-    const [createPortfolio] = useCreatePortfolio();
-    const [updatePortfolio] = useUpdatePortfolio();
-    const [deletePortfolio] = useDeletePortfolio();
-
+    const {data, loading, error} = useGetPortfolio();
     const portfolios = data && data.portfolios || [];
 
     return (
-        <div>
+        <BaseLayout>
             <div className="container">
                 <section className="section-title">
                     <div className="px-2">
@@ -25,11 +22,11 @@ const Portfolios = () => {
                             <h1>Portfolios</h1>
                         </div>
                     </div>
-                    <button
-                            onClick={createPortfolio}
-                            className="btn btn-primary">
+                    <AppLink
+                        href="/portfolios/new"
+                        className="btn btn-primary">
                         Create Portfolio
-                    </button>
+                    </AppLink>
                 </section>
                 <section className="pb-5">
                     <div className="row">
@@ -42,16 +39,6 @@ const Portfolios = () => {
                                             <PortfolioCard portfolio={portfolio}/>
                                         </a>
                                     </Link>
-                                    <button
-                                        onClick={() => updatePortfolio({ variables: { id: portfolio._id } })}
-                                        className="btn btn-info">
-                                        Update Portfolio
-                                    </button>
-                                    <button
-                                        onClick={() => deletePortfolio({ variables: { id: portfolio._id } })}
-                                        className="btn btn-danger">
-                                        Delete Portfolio
-                                    </button>
                                 </div>
                             )
                         })
@@ -59,9 +46,8 @@ const Portfolios = () => {
                     </div>
                 </section>
             </div>
-        </div>
-
+        </BaseLayout>
     )
 };
 
-export default withApollo(Portfolios, { getDataFromTree });
+export default withApollo(Portfolios, {getDataFromTree});

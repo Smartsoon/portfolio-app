@@ -1,18 +1,24 @@
 import React from "react";
-import App from 'next/app'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/index.scss';
-import AppNavbar from "@/components/shared/navbar";
-import Hero from "@/components/shared/hero";
+import 'react-toastify/dist/ReactToastify.css';
+import "../styles/nprogress.scss";
+import dynamic from "next/dynamic";
+
+const TopProgressBar = dynamic(
+    () => {
+        return import("../components/shared/TopProgressBar");
+    },
+    {ssr: false},
+);
 
 const MyApp = ({Component, pageProps}) => {
-
     return (
-        <div>
-            <AppNavbar/>
-            {Component.name === 'Home' && <Hero/>}
+        <>
+            <TopProgressBar/>
             <Component {...pageProps} />
-        </div>
+        </>
     )
 };
 
