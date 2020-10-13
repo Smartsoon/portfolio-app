@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
+import React from "react";
 import BaseLayout from "../../../layouts/baseLayout";
 import {Card, Button} from 'react-bootstrap';
 import {useDeletePortfolio, useGetPortfolio, useGetUser, useGetUserPortfolios} from "../../../apollo/actions";
@@ -7,11 +6,10 @@ import withApollo from '@/hoc/withApollo'
 import {getDataFromTree} from "@apollo/client/react/ssr";
 import withAuth from "../../../hoc/withAuth";
 import AppLink from "../../../components/shared/appLink";
-import Link from "next/link";
 import {toast} from "react-toastify";
 import {formatDate} from "../../../utils/functions";
 
-const instructorDashboard = withAuth((props) => {
+const instructorDashboard = withAuth(() => {
     const {data: {user} = {} } = useGetUser();
     const {data: {portfoliosFromOtherPage} = []} = useGetPortfolio();
     const portfolios = portfoliosFromOtherPage && portfoliosFromOtherPage.portfolios || [];
@@ -85,8 +83,6 @@ const instructorDashboard = withAuth((props) => {
             </div>
         </BaseLayout>
     )
-}, ['admin', 'instructor'], {ssr: true});
-
-
+}, ['admin', 'instructor'], {ssr: false});
 
 export default withApollo(instructorDashboard, {getDataFromTree});

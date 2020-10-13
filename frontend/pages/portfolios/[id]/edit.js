@@ -55,4 +55,4 @@ const PortfolioEdit = () => {
     )
 };
 
-export default withApollo(withAuth(PortfolioEdit, ['admin', 'instructor'], {ssr: true}), {getDataFromTree});
+export default withApollo(withAuth(PortfolioEdit, ['admin', 'instructor'], {ssr: false}), {getDataFromTree});

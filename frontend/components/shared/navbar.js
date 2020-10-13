@@ -10,17 +10,26 @@ import {useRouter} from 'next/router'
 const AppNavbar = () => {
     const [user, setUser] = useState(null);
     const [hasResponse, setHasResponse] = useState(false);
+    const [isMounted, setIsMounted] = useState(true);
     const [getUser, {data, loading, error}] = useLazyGetUser({
         fetchPolicy: 'network-only'
     });
+
+    useEffect(() => {
+
+        if (isMounted) {
+            console.log('1');
+            getUser();
+        }
+
+        setIsMounted(false)
+    }, []);
 
     const userRoles = ['admin', 'instructor'];
 
     const router = useRouter();
 
-    useEffect(() => {
-        getUser();
-    }, []);
+
 
 
     if (data) {
@@ -53,64 +62,69 @@ const AppNavbar = () => {
                 </Nav>
 
                 {
-                    user ?
-                        <Nav className="">
-                            <div className="mr-3 d-flex align-self-center align-items-center">
-                                <div className="mr-1">
-                                    {
-                                        user.avatar ?
-                                            <img src={user.avatar} height="25px" alt=""/>
-                                            :
-                                            <img
-                                                src="https://annam-finefood.com/wp-content/uploads/2016/09/no-avatar.png"
-                                                height="25px" alt=""/>
-                                    }
+                    hasResponse &&
+                    <Nav className="">
+                        {
+                            user ?
+                            <>
+                                <div className="mr-3 d-flex align-self-center align-items-center">
+                                    <div className="mr-1">
+                                        {
+                                            user.avatar ?
+                                                <img src={user.avatar} height="25px" alt=""/>
+                                                :
+                                                <img
+                                                    src="https://annam-finefood.com/wp-content/uploads/2016/09/no-avatar.png"
+                                                    height="25px" alt=""/>
+                                        }
+                                    </div>
+                                    <NavDropdown title={user.username} id="basic-nav-dropdown">
+                                        {
+                                            router.pathname !== '/' &&
+                                            <AppLink className="dropdown-item" href="/">Home</AppLink>
+                                        }
+
+                                        {
+                                            (router.pathname !== '/portfolios/new' && userRoles.includes(user.role)) &&
+                                            <AppLink className="dropdown-item" href="/portfolios/new">Create
+                                                Portfolio</AppLink>
+                                        }
+
+                                        {
+                                            (router.pathname !== `/instructor/[id]/dashboard` && userRoles.includes(user.role)) &&
+                                            <AppLink
+                                                className="dropdown-item"
+                                                href="/instructor/[id]/dashboard"
+                                                as={`/instructor/${user._id}/dashboard`}
+                                            >
+                                                Dashboard
+                                            </AppLink>
+                                        }
+                                        {
+                                            router.pathname !== '/preferences' &&
+                                            <AppLink className="dropdown-item" href="/">Preferences</AppLink>
+                                        }
+
+                                        <NavDropdown.Divider/>
+                                        <AppLink className="dropdown-item" href="/logout">Sign Out</AppLink>
+                                    </NavDropdown>
                                 </div>
-                                <NavDropdown title={user.username} id="basic-nav-dropdown">
-                                    {
-                                        router.pathname !== '/' &&
-                                        <AppLink className="dropdown-item" href="/">Home</AppLink>
-                                    }
 
-                                    {
-                                        (router.pathname !== '/portfolios/new' && userRoles.includes(user.role)) &&
-                                        <AppLink className="dropdown-item" href="/portfolios/new">Create
-                                            Portfolio</AppLink>
-                                    }
-
-                                    {
-                                        (router.pathname !== `/instructor/[id]/dashboard` && userRoles.includes(user.role)) &&
-                                        <AppLink
-                                            className="dropdown-item"
-                                            href="/instructor/[id]/dashboard"
-                                            as={`/instructor/${user._id}/dashboard`}
-                                        >
-                                            Dashboard
-                                        </AppLink>
-                                    }
-                                    {
-                                        router.pathname !== '/preferences' &&
-                                        <AppLink className="dropdown-item" href="/">Preferences</AppLink>
-                                    }
-
-                                    <NavDropdown.Divider />
-                                    <AppLink className="dropdown-item" href="/logout">Sign Out</AppLink>
-                                </NavDropdown>
-                            </div>
-
-                            < AppLink href="/logout" className="mr-3 nav-link btn btn-danger bright text-white">
-                                Sign Out
-                            </AppLink>
-                        </Nav>
-                        :
-                        <Nav className="">
-                            < AppLink href="/login" className="mr-3 btn nav-link ">
-                                Sign In
-                            </AppLink>
-                            <AppLink href="/register" className="mr-3 nav-link btn btn-success bg-green-2 bright">
-                                Sign Up
-                            </AppLink>
-                        </Nav>
+                                < AppLink href="/logout" className="mr-3 nav-link btn btn-danger bright text-white">
+                                    Sign Out
+                                </AppLink>
+                            </>
+                                :
+                                <>
+                                    < AppLink href="/login" className="mr-3 btn nav-link ">
+                                        Sign In
+                                    </AppLink>
+                                    <AppLink href="/register" className="mr-3 nav-link btn btn-success bg-green-2 bright">
+                                        Sign Up
+                                    </AppLink>
+                                </>
+                        }
+                    </Nav>
                 }
 
 

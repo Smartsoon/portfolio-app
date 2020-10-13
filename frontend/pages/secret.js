@@ -22,6 +22,6 @@ const Secret = withAuth(() => {
             </div>
         </BaseLayout>
     )
-}, 'admin', {ssr: true});
+}, 'admin', {ssr: false});
 
 export default withApollo(Secret);

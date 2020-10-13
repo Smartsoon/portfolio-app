@@ -75,6 +75,14 @@ export const useSignIn = () => useMutation(SIGN_IN, {
 
 export const useLazyGetUser = () => useLazyQuery(GET_AUTH_USER);
 
-export const useSignOut =() => useMutation(SIGN_OUT);
+export const useSignOut =() => useMutation(SIGN_OUT, {
+    update(cache, { data: { signOut } }) {
+        try {
+            cache.reset()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+});
 
 export const useGetUser = () => useQuery(GET_AUTH_USER);

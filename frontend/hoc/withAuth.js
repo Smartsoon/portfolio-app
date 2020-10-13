@@ -11,7 +11,6 @@ const withAuth = (WrappedComponent, role, options = {ssr: false}) => {
             fetchPolicy: 'network-only'
         });
 
-
         if (
             !loading &&
             (!user || error) &&
@@ -27,11 +26,7 @@ const withAuth = (WrappedComponent, role, options = {ssr: false}) => {
             return <WrappedComponent {...props} />
         }
 
-        return (
-            <BaseLayout>
-                <Spinner animation="border" variant="danger" />
-            </BaseLayout>
-        );
+        return <Spinner className="spinner" size="lg" animation="border" variant="danger" />
     }
 
     if (options.ssr) {

@@ -5,17 +5,14 @@ import {getDataFromTree} from "@apollo/client/react/ssr";
 import {useSignOut} from '../apollo/actions/index';
 import BaseLayout from "../layouts/baseLayout";
 
-const Logout = ({apollo}) => {
+const Logout = () => {
     const [signOut] = useSignOut();
     const router = useRouter();
 
     useEffect(() => {
         signOut()
             .then(() => {
-                apollo.resetStore()
-                    .then(() => {
-                        router.push('/login')
-                    })
+                router.push('/login')
             });
 
     }, []);

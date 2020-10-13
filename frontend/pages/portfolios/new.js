@@ -50,4 +50,4 @@ const CreateNewPortfolio = () => {
     )
 };
 
-export default withApollo(withAuth(CreateNewPortfolio, ['admin', 'instructor'], {ssr: true}), {getDataFromTree});
+export default withApollo(withAuth(CreateNewPortfolio, ['admin', 'instructor'], {ssr: false}), {getDataFromTree});
