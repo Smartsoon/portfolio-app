@@ -18,6 +18,7 @@ const data = {
             name: 'Nestee',
             username: 'Nestee',
             password: 'nesteemusic@gmail.com',
+            role: 'admin',
             info: 'ertertert'
         },
         {
@@ -26,7 +27,6 @@ const data = {
             name: 'Kostia',
             username: 'Kostia',
             password: 'qwert12345',
-            role: 'admin',
             info: '123123123',
         }
     ],

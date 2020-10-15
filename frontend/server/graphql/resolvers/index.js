@@ -20,8 +20,19 @@ module.exports.forumQueries = {
     forumCategories: (root, args, ctx) => {
         return ctx.models.ForumCategory.getAll({})
     },
-    forumTopics:  (root, args, ctx) => {
-        return ctx.models.ForumTopic.getAll({})
+
+    // забираем из аргументов (которые нужно будет указать при получении данных с фронта (указать нужно будет slug)) category
+    forumTopicsByCategorySlugOrId: async (root, {categorySlug, id}, ctx) => {
+        // засовываем slug в функцию поиска категории (ищется в можели и возвращает id категории)
+        const forumCategory = await ctx.models.ForumCategory.getCategoryBySlug(categorySlug);
+        // находим в базе топики по нужной категории
+        if (forumCategory) {
+            // если слаг присутствует
+            return ctx.models.ForumTopic.getAllByCategory(forumCategory._id)
+        } else {
+            // если отсуствует
+            return ctx.models.ForumTopic.getAllByCategory(id)
+        }
     }
 };
 

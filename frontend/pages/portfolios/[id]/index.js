@@ -8,12 +8,13 @@ import {useGetPortfolioById} from "../../../apollo/actions";
 import {formatDate, setDaysOfExperience} from "../../../utils/functions";
 
 
-const PortfolioDetail = () => {
+const PortfolioDetail = ({slug}) => {
     const [portfolioStartDate, setPortfolioStartDate] = useState(null);
     const [portfolioEndDate, setPortfolioEndDate] = useState(null);
     const [portfolioDateDifference, setPortfolioDateDifference] = useState(null);
     const router = useRouter();
     const id = router.query.id;
+    // const slugOrId = slug ? {router, id} : {id};
     const {data, loading} = useGetPortfolioById({variables: {id}});
     const portfolio = data && data.portfolio || {};
     // const portfolioStartDate = portfolio.startDate && formatDate(portfolio.startDate);

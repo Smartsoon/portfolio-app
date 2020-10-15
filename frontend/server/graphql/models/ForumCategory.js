@@ -5,6 +5,11 @@ class ForumCategory {
     getAll() {
         return this.Model.find({})
     }
+
+    getCategoryBySlug(slug) {
+        return this.Model.findOne({slug})
+            .populate('user')
+    }
 }
 
 module.exports = ForumCategory;

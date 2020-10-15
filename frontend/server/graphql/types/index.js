@@ -32,7 +32,7 @@ module.exports.portfolioTypes = gql`
         user: User
         
         forumCategories: [ForumCategory]
-        forumTopics: [ForumTopic]
+        forumTopicsByCategorySlugOrId(categorySlug: String, id: String!): [ForumTopic]
     }
 
     type Mutation {
@@ -85,14 +85,19 @@ exports.forumTypes = gql`
         slug: String
         createdAt: String
     }
+    
+    type Author {
+        avatar: String
+        username: String
+    }
 
     type ForumTopic {
         _id: ID
         title: String!
         subTitle: String!
         content: String!
-        forumCategory: ID
-        user: ID
+        forumCategory: ForumCategory
+        user: User
         slug: String
         createdAt: String
     }

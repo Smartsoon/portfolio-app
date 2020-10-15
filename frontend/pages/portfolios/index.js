@@ -37,8 +37,10 @@ const Portfolios = () => {
                             return (
                                 <div key={portfolio._id} className="col-md-4">
                                     <Link href="/portfolios/[id]"
+                                          // portfolio._id && portfolio._id : portfolio.slug
                                           as={`/portfolios/${portfolio._id}`}>
                                         <a className="card-link">
+                                            {/*slug={!!portfolio._id}*/}
                                             <PortfolioCard portfolio={portfolio}/>
                                         </a>
                                     </Link>
