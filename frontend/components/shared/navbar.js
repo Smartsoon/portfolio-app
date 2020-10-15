@@ -18,7 +18,6 @@ const AppNavbar = () => {
     useEffect(() => {
 
         if (isMounted) {
-            console.log('1');
             getUser();
         }
 

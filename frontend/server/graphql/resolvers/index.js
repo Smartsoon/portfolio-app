@@ -16,6 +16,16 @@ module.exports.authQueries = {
     },
 };
 
+module.exports.forumQueries = {
+    forumCategories: (root, args, ctx) => {
+        return ctx.models.ForumCategory.getAll({})
+    },
+    forumTopics:  (root, args, ctx) => {
+        return ctx.models.ForumTopic.getAll({})
+    }
+};
+
+
 module.exports.portfolioMutations = {
     createPortfolio: async (root, {input}, ctx) => {
         const createdPortfolio = await ctx.models.Portfolio.createOne(input);

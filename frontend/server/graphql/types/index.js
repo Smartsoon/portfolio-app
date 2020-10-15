@@ -30,6 +30,9 @@ module.exports.portfolioTypes = gql`
         
         userPortfolios: [Portfolio]
         user: User
+        
+        forumCategories: [ForumCategory]
+        forumTopics: [ForumTopic]
     }
 
     type Mutation {
@@ -71,5 +74,26 @@ exports.userTypes = gql`
     input signInInput {
         email: String!
         password: String!
+    }
+`;
+
+exports.forumTypes = gql`
+    type ForumCategory {
+        _id: ID
+        title: String!
+        subTitle: String!
+        slug: String
+        createdAt: String
+    }
+
+    type ForumTopic {
+        _id: ID
+        title: String!
+        subTitle: String!
+        content: String!
+        forumCategory: ID
+        user: ID
+        slug: String
+        createdAt: String
     }
 `;

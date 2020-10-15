@@ -7,6 +7,7 @@ import {useGetPortfolioById, useUpdatePortfolio} from "../../../apollo/actions";
 import CreateNewPortfolioForm from "../../../components/forms/createNewPortfolioForm";
 import {getDataFromTree} from "@apollo/client/react/ssr";
 import { toast } from 'react-toastify';
+import Spinner from "react-bootstrap/Spinner";
 
 
 const PortfolioEdit = () => {
@@ -21,6 +22,14 @@ const PortfolioEdit = () => {
             ||
             <div className="d-none">{toast.error("Oops... Something went wrong!", {autoClose: 3000})}</div>
         )};
+
+    if (loading && typeof window !== 'undefined') {
+        return (
+            <BaseLayout>
+                <Spinner className="spinner" size="lg" animation="border" variant="danger"/>
+            </BaseLayout>
+        )
+    }
 
     const handlePortfolioUpdate = async (data) => {
         try {

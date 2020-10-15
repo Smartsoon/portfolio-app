@@ -9,7 +9,7 @@ const BaseLayout = ({children, page = ''}) => {
     const {message} = router.query;
 
     return (
-        <>
+        <div>
             <div className="navbar-wrapper">
                 <AppNavbar/>
             </div>
@@ -20,7 +20,7 @@ const BaseLayout = ({children, page = ''}) => {
                 {(message && message === 'NOT_AUTHORIZED') && toast.warning('Please log in to get the access!', {autoClose: 3000})}
             </div>
             <ToastContainer/>
-        </>
+        </div>
     )
 };
 

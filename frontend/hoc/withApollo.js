@@ -32,6 +32,7 @@
 
 import React from "react";
 import {ApolloClient, InMemoryCache, ApolloProvider, HttpLink} from '@apollo/client';
+import {useGetPortfolio} from "../apollo/actions";
 
 let globalApolloClient;
 

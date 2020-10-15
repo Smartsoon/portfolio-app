@@ -2,17 +2,25 @@ import React from 'react';
 import Link from 'next/link';
 import withApollo from '@/hoc/withApollo'
 import {getDataFromTree} from "@apollo/client/react/ssr";
-
 import {useGetPortfolio} from '@/apollo/actions/index'
 import PortfolioCard from "@/components/portfolio";
 import AppLink from "../../components/shared/appLink";
 import BaseLayout from "../../layouts/baseLayout";
+import withAuth from "../../hoc/withAuth";
+import Spinner from "react-bootstrap/Spinner";
 
 
 const Portfolios = () => {
     const {data, loading, error} = useGetPortfolio();
     const portfolios = data && data.portfolios || [];
 
+    if (loading || !portfolios || typeof window === 'undefined') {
+        return (
+            <BaseLayout>
+                <Spinner className="spinner" size="lg" animation="border" variant="danger"/>
+            </BaseLayout>
+        )
+    }
     return (
         <BaseLayout>
             <div className="container">
@@ -22,11 +30,6 @@ const Portfolios = () => {
                             <h1>Portfolios</h1>
                         </div>
                     </div>
-                    <AppLink
-                        href="/portfolios/new"
-                        className="btn btn-primary">
-                        Create Portfolio
-                    </AppLink>
                 </section>
                 <section className="pb-5">
                     <div className="row">

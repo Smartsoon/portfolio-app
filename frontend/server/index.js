@@ -3,13 +3,15 @@ const next = require('next');
 const {ApolloServer, gql} = require('apollo-server-express');
 const mongoose = require('mongoose');
 
-const {portfolioMutations, portfolioQueries, userMutations, authQueries} = require('./graphql/resolvers/index');
-const {portfolioTypes, userTypes} = require('./graphql/types/index');
-const { buildAuthContext } = require('./graphql/context/index');
+const {portfolioMutations, portfolioQueries, userMutations, authQueries, forumQueries} = require('./graphql/resolvers/index');
+const {portfolioTypes, userTypes, forumTypes} = require('./graphql/types/index');
+const {buildAuthContext} = require('./graphql/context/index');
 
 //GQL Models
 const Portfolio = require('./graphql/models/Portfolio');
 const User = require('./graphql/models/User');
+const ForumTopic = require('./graphql/models/ForumTopic');
+const ForumCategory = require('./graphql/models/ForumCategory');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -25,14 +27,16 @@ app.prepare().then(() => {
     require('./middlewares/index').init(server, db);
 
     const typeDefs = gql`
-        ${portfolioTypes},
+        ${portfolioTypes}
         ${userTypes}
+        ${forumTypes}
     `;
 
     const resolvers = {
         Query: {
             ...portfolioQueries,
-            ...authQueries
+            ...authQueries,
+            ...forumQueries
         },
         Mutation: {
             ...portfolioMutations,
@@ -48,7 +52,9 @@ app.prepare().then(() => {
                 ...buildAuthContext(req),
                 models: {
                     Portfolio: new Portfolio(mongoose.model('Portfolio'), req.user),
-                    User: new User(mongoose.model('User'))
+                    User: new User(mongoose.model('User')),
+                    ForumTopic: new ForumTopic(mongoose.model('ForumTopic')),
+                    ForumCategory: new ForumCategory(mongoose.model('ForumCategory'))
                 }
             })
         }

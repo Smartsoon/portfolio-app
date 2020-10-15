@@ -8,6 +8,7 @@ import withAuth from "../../../hoc/withAuth";
 import AppLink from "../../../components/shared/appLink";
 import {toast} from "react-toastify";
 import {formatDate} from "../../../utils/functions";
+import Spinner from "react-bootstrap/Spinner";
 
 const instructorDashboard = withAuth(() => {
     const {data: {user} = {} } = useGetUser();
@@ -16,7 +17,15 @@ const instructorDashboard = withAuth(() => {
     const {data, loading, error} = useGetUserPortfolios();
     const userPortfolios = data && data.userPortfolios || [];
 
-    const [deletePortfolio] = useDeletePortfolio();
+    const [deletePortfolio, {loading: {deleteLoading}}] = useDeletePortfolio();
+
+    if (loading && typeof window !== 'undefined') {
+        return (
+            <BaseLayout>
+                <Spinner className="spinner" size="lg" animation="border" variant="danger"/>
+            </BaseLayout>
+        )
+    }
 
     return (
         <BaseLayout>
@@ -62,6 +71,7 @@ const instructorDashboard = withAuth(() => {
 
                                                         <div>
                                                             <Button
+                                                                disabled={deleteLoading}
                                                                 onClick={async () => {
                                                                     await deletePortfolio({variables: {id: userPortfolio._id}});
                                                                     toast.warning(`Portfolio ${userPortfolio.title} has been deleted`, {autoClose: 3000})
