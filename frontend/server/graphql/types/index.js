@@ -32,7 +32,12 @@ module.exports.portfolioTypes = gql`
         user: User
         
         forumCategories: [ForumCategory]
-        forumTopicsByCategorySlugOrId(categorySlug: String, id: String!): [ForumTopic]
+        topicsByCategory(category: String): [ForumTopic]
+        
+        topicBySlug(slug: String): ForumTopic
+
+        postsByTopic(slug: String): [Post]
+        
     }
 
     type Mutation {
@@ -43,6 +48,10 @@ module.exports.portfolioTypes = gql`
         signUp(input: signUpInput): String
         signIn(input: signInInput): User
         signOut: Boolean
+
+        createTopic(input: TopicInput): ForumTopic
+        
+        createPost(input: PostInput): Post
     }
 `;
 
@@ -94,11 +103,36 @@ exports.forumTypes = gql`
     type ForumTopic {
         _id: ID
         title: String!
-        subTitle: String!
         content: String!
         forumCategory: ForumCategory
         user: User
         slug: String
         createdAt: String
     }
+    
+    input TopicInput {
+        title: String!
+        content: String!
+        forumCategory: String
+    }
+
+    type Post {
+        _id: ID
+        content: String
+        slug: String
+        fullSlug: String
+        topic: ForumTopic
+        user: User
+        parent: Post
+        createdAt: String
+    }
+
+    input PostInput {
+        content: String
+        topic: String
+        parent: String
+    }
 `;
+
+
+

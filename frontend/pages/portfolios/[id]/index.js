@@ -17,9 +17,6 @@ const PortfolioDetail = ({slug}) => {
     // const slugOrId = slug ? {router, id} : {id};
     const {data, loading} = useGetPortfolioById({variables: {id}});
     const portfolio = data && data.portfolio || {};
-    // const portfolioStartDate = portfolio.startDate && formatDate(portfolio.startDate);
-    // const portfolioEndDate = portfolio.endDate && formatDate(portfolio.endDate) || 'Still working...';
-    // const portfolioDateDifference = (portfolio.startDate && portfolio.endDate) && setDaysOfExperience(portfolio.startDate, portfolio.endDate);
 
     useEffect(() => {
         let {startDate, endDate} = portfolio;

@@ -1,3 +1,25 @@
+module.exports.authQueries = {
+    user: (root, args, ctx) => {
+        return ctx.models.User.getAuthUser(ctx)
+    },
+};
+
+module.exports.userMutations = {
+    signUp: async (root, {input}, ctx) => {
+        const registeredUser = await ctx.models.User.signUp(input);
+        return registeredUser._id
+    },
+
+    signIn: async (root, {input}, ctx) => {
+        return ctx.models.User.signIn(input, ctx);
+    },
+
+    signOut: async (root, args, ctx) => {
+        return ctx.models.User.signOut(ctx);
+    }
+};
+
+
 module.exports.portfolioQueries = {
     portfolio: (root, {id}, ctx) => {
         return ctx.models.Portfolio.getById(id)
@@ -10,33 +32,6 @@ module.exports.portfolioQueries = {
     },
 };
 
-module.exports.authQueries = {
-    user: (root, args, ctx) => {
-        return ctx.models.User.getAuthUser(ctx)
-    },
-};
-
-module.exports.forumQueries = {
-    forumCategories: (root, args, ctx) => {
-        return ctx.models.ForumCategory.getAll({})
-    },
-
-    // забираем из аргументов (которые нужно будет указать при получении данных с фронта (указать нужно будет slug)) category
-    forumTopicsByCategorySlugOrId: async (root, {categorySlug, id}, ctx) => {
-        // засовываем slug в функцию поиска категории (ищется в можели и возвращает id категории)
-        const forumCategory = await ctx.models.ForumCategory.getCategoryBySlug(categorySlug);
-        // находим в базе топики по нужной категории
-        if (forumCategory) {
-            // если слаг присутствует
-            return ctx.models.ForumTopic.getAllByCategory(forumCategory._id)
-        } else {
-            // если отсуствует
-            return ctx.models.ForumTopic.getAllByCategory(id)
-        }
-    }
-};
-
-
 module.exports.portfolioMutations = {
     createPortfolio: async (root, {input}, ctx) => {
         const createdPortfolio = await ctx.models.Portfolio.createOne(input);
@@ -44,7 +39,7 @@ module.exports.portfolioMutations = {
     },
 
     updatePortfolio: async (root, {id, input}, ctx) => {
-        const updatedPortfolio = await ctx.models.Portfolio.findAndUpdate(id , input);
+        const updatedPortfolio = await ctx.models.Portfolio.findAndUpdate(id, input);
         return updatedPortfolio
     },
 
@@ -54,20 +49,59 @@ module.exports.portfolioMutations = {
     }
 };
 
-module.exports.userMutations = {
-    signUp: async (root, { input }, ctx) => {
-        const registeredUser = await ctx.models.User.signUp(input);
-        return registeredUser._id
+
+module.exports.forumQueries = {
+    forumCategories: (root, args, ctx) => {
+        return ctx.models.ForumCategory.getAll({})
     },
 
-    signIn: async (root, { input }, ctx) => {
-        return ctx.models.User.signIn(input, ctx);
+    // забираем из аргументов (которые нужно будет указать при получении данных с фронта (указать нужно будет slug)) category
+    topicsByCategory: async (root, {category}, ctx) => {
+        // засовываем slug в функцию поиска категории (ищется в можели и возвращает id категории)
+        const forumCategory = await ctx.models.ForumCategory.getCategoryBySlug(category);
+        if (!forumCategory) {
+            return null
+        }
+        // находим в базе топики по нужной категории
+        // если слаг присутствует
+        return ctx.models.ForumTopic.getAllByCategory(forumCategory._id)
+
+        // else {
+        //     // если отсуствует
+        //     return ctx.models.ForumTopic.getAllByCategory(id)
+        // }
     },
 
-    signOut: async (root, args, ctx) => {
-        return ctx.models.User.signOut(ctx);
+    topicBySlug: (root, {slug}, ctx) => {
+        return ctx.models.ForumTopic.getBySlug(slug)
+    },
+
+    postsByTopic: async (root, {slug}, ctx) => {
+        const topic = await ctx.models.ForumTopic.getBySlug(slug);
+
+        if (!topic) {
+            return null
+        }
+
+        return ctx.models.Post.getAllByTopic(topic._id)
     }
 };
+
+module.exports.forumMutations = {
+    createTopic: async (root, {input}, ctx) => {
+        const category = await ctx.models.ForumCategory.getCategoryBySlug(input.forumCategory);
+        input.forumCategory = category._id;
+        const topic = await ctx.models.ForumTopic.create(input);
+        return topic
+    },
+
+    createPost: async (root, {input}, ctx) => {
+        const post = await ctx.models.Post.create(input);
+        return post
+    }
+};
+
+
 
 
 

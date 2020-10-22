@@ -38,7 +38,9 @@
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.9.0",
     "react-toastify": "6.0.9",
-    "nprogress": "0.2.0"
+    "nprogress": "0.2.0",
+    "slugify": "1.4.5",
+    "unique-slug": "2.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

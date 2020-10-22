@@ -13,3 +13,7 @@ export const setDaysOfExperience = (startDate, endDate) => {
 
     return moment.unix(now).diff(moment.unix(startDate / 1000), 'days')
 };
+
+export const fromNow = (date) => {
+    return moment.unix(date / 1000).fromNow()
+};

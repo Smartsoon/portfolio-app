@@ -6,6 +6,7 @@ require('./models/portfolio');
 require('./models/User');
 require('./models/forumCategory');
 require('./models/forumTopics');
+require('./models/post');
 
 exports.dbConnect = () => {
     mongoose.connect(config.DB_URI, {

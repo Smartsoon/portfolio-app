@@ -3,7 +3,7 @@ const next = require('next');
 const {ApolloServer, gql} = require('apollo-server-express');
 const mongoose = require('mongoose');
 
-const {portfolioMutations, portfolioQueries, userMutations, authQueries, forumQueries} = require('./graphql/resolvers/index');
+const {portfolioMutations, portfolioQueries, userMutations, authQueries, forumQueries, forumMutations} = require('./graphql/resolvers/index');
 const {portfolioTypes, userTypes, forumTypes} = require('./graphql/types/index');
 const {buildAuthContext} = require('./graphql/context/index');
 
@@ -12,6 +12,7 @@ const Portfolio = require('./graphql/models/Portfolio');
 const User = require('./graphql/models/User');
 const ForumTopic = require('./graphql/models/ForumTopic');
 const ForumCategory = require('./graphql/models/ForumCategory');
+const Post = require('./graphql/models/Post');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -40,7 +41,8 @@ app.prepare().then(() => {
         },
         Mutation: {
             ...portfolioMutations,
-            ...userMutations
+            ...userMutations,
+            ...forumMutations
         },
     };
 
@@ -53,8 +55,9 @@ app.prepare().then(() => {
                 models: {
                     Portfolio: new Portfolio(mongoose.model('Portfolio'), req.user),
                     User: new User(mongoose.model('User')),
-                    ForumTopic: new ForumTopic(mongoose.model('ForumTopic')),
-                    ForumCategory: new ForumCategory(mongoose.model('ForumCategory'))
+                    ForumTopic: new ForumTopic(mongoose.model('ForumTopic'), req.user),
+                    ForumCategory: new ForumCategory(mongoose.model('ForumCategory')),
+                    Post: new Post(mongoose.model('Post'), req.user),
                 }
             })
         }

@@ -1,7 +1,24 @@
 import React from 'react';
 import BaseLayout from "../../../layouts/baseLayout";
+import {useGetForumCategories} from "../../../apollo/actions";
+import Spinner from "react-bootstrap/Spinner";
+import withApollo from "../../../hoc/withApollo";
+import {getDataFromTree} from "@apollo/client/react/ssr";
+import Link from "next/link";
 
 const Categories = () => {
+    const {data, loading, error} = useGetForumCategories();
+    const categories = data && data.forumCategories || [];
+
+
+    if (loading || !categories || typeof window === 'undefined') {
+        return (
+            <BaseLayout>
+                <Spinner className="spinner" size="lg" animation="border" variant="danger"/>
+            </BaseLayout>
+        )
+    }
+
     return (
         <BaseLayout>
             <div>
@@ -15,63 +32,29 @@ const Categories = () => {
                     </section>
                     <section className="fj-category-list">
                         <div className="row">
-                            <div className="col-md-4">
-                                <div className="fj-category-container">
-                                    <a className="fj-category subtle-shadow no-border" href="#">
-                                        {
-                                            // <div className="category-icon">
-                                            //   <img src="images/pen.png" />
-                                            // </div>
-                                        }
-                                        <div className="category-information">
-                                            <div className="heading gray-90">
-                                                General Discussion
-                                            </div>
-                                            <div className="description">
-                                                Just general question
-                                            </div>
+                            {
+                                categories.map(category =>
+                                    <div key={category.slug} className="col-md-4">
+                                        <div className="fj-category-container">
+                                            <Link
+                                                href="/forum/categories/[slug]"
+                                                as={`/forum/categories/${category.slug}`}
+                                            >
+                                                <a className="fj-category subtle-shadow no-border">
+                                                    <div className="category-information">
+                                                        <div className="heading gray-90">
+                                                            {category.title}
+                                                        </div>
+                                                        <div className="description">
+                                                            {category.subTitle}
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </Link>
                                         </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="fj-category-container">
-                                    <a className="fj-category subtle-shadow no-border" href="#">
-                                        {
-                                            // <div className="category-icon">
-                                            //   <img src="images/pen.png" />
-                                            // </div>
-                                        }
-                                        <div className="category-information">
-                                            <div className="heading gray-90">
-                                                Other Discussion
-                                            </div>
-                                            <div className="description">
-                                                Just general question
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="fj-category-container">
-                                    <a className="fj-category subtle-shadow no-border" href="#">
-                                        {
-                                            // <div className="category-icon">
-                                            //   <img src="images/pen.png" />
-                                            // </div>
-                                        }
-                                        <div className="category-information">
-                                            <div className="heading gray-90">
-                                                Some Discussion
-                                            </div>
-                                            <div className="description">
-                                                Just general question
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+                                    </div>
+                                )
+                            }
                         </div>
                     </section>
                 </div>
@@ -80,4 +63,4 @@ const Categories = () => {
     )
 };
 
-export default Categories;
+export default withApollo(Categories, {getDataFromTree});

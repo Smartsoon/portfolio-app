@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const userId = mongoose.Types.ObjectId();
 const userId2 = mongoose.Types.ObjectId();
@@ -8,6 +9,16 @@ const forumId2 = mongoose.Types.ObjectId();
 const forumId3 = mongoose.Types.ObjectId();
 
 const topicId = mongoose.Types.ObjectId();
+
+const postId = mongoose.Types.ObjectId();
+const postId2 = mongoose.Types.ObjectId();
+const postId3 = mongoose.Types.ObjectId();
+const postId4 = mongoose.Types.ObjectId();
+
+const post1CreatedAt = moment().subtract(7, 'days');
+const post2CreatedAt = moment(post1CreatedAt).add(1, 'days');
+const post3CreatedAt = moment(post2CreatedAt).add(1, 'days');
+const post4CreatedAt = moment(post3CreatedAt).add(1, 'days');
 
 const data = {
     users: [
@@ -110,6 +121,46 @@ const data = {
             user: userId
         }
     ],
+    posts: [
+        {
+            _id: postId,
+            content: 'Hey there how are you ?',
+            slug: 'md43',
+            fullSlug: post1CreatedAt.toISOString() + ':md43',
+            topic: topicId,
+            user: userId,
+            createdAt: post1CreatedAt
+        },
+        {
+            _id: postId2,
+            content: 'What do you think about this?',
+            slug: 'md59',
+            fullSlug: post2CreatedAt.toISOString() + ':md59',
+            topic: topicId,
+            user: userId2,
+            createdAt: post2CreatedAt
+        },
+        {
+            _id: postId3,
+            content: 'I think its nice (:',
+            slug: 'md59/md79',
+            fullSlug: post2CreatedAt.toISOString() + ':md59' + '/' + post3CreatedAt.toISOString() + ':md79',
+            topic: topicId,
+            user: userId,
+            parent: postId2,
+            createdAt: post3CreatedAt
+        },
+        {
+            _id: postId4,
+            content: 'Good to hear that!',
+            slug: 'md59/md79/md89',
+            fullSlug: post2CreatedAt.toISOString() + ':md59' + '/' + post3CreatedAt.toISOString() + ':md79' + '/' + post4CreatedAt.toISOString() + ':md89',
+            topic: topicId,
+            user: userId2,
+            parent: postId3,
+            createdAt: post4CreatedAt
+        },
+    ]
 };
 
 module.exports = data;
