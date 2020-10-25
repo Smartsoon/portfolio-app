@@ -30,6 +30,7 @@
     "next": "^9.5.3",
     "next-with-apollo": "latest",
     "node-sass": "^4.14.1",
+    "nprogress": "0.2.0",
     "passport": "^0.4.1",
     "passport-strategy": "^1.0.0",
     "react": "^16.13.1",
@@ -37,8 +38,8 @@
     "react-datepicker": "^3.2.2",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.9.0",
+    "react-js-pagination": "^3.0.3",
     "react-toastify": "6.0.9",
-    "nprogress": "0.2.0",
     "slugify": "1.4.5",
     "unique-slug": "2.0.2"
   },

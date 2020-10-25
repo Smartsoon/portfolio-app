@@ -36,7 +36,7 @@ module.exports.portfolioTypes = gql`
         
         topicBySlug(slug: String): ForumTopic
 
-        postsByTopic(slug: String): [Post]
+        postsByTopic(slug: String, pageNum: Int, pageSize: Int): PaginatedPosts
         
     }
 
@@ -127,6 +127,11 @@ exports.forumTypes = gql`
         createdAt: String
     }
 
+    type PaginatedPosts {
+        posts: [Post]
+        count: Int
+    }
+    
     input PostInput {
         content: String
         topic: String

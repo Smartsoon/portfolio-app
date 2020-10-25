@@ -125,22 +125,40 @@ export const useCreateTopic = () => useMutation(CREATE_TOPIC, {
     }
 });
 
-export const useCreatePost = () => useMutation(CREATE_POST, {
-    update(cache, {data: {createPost}}) {
-        try {
-            const {postsByTopic} = cache.readQuery({query: GET_POSTS_BY_TOPIC, variables: {slug: createPost.topic.slug}});
-            cache.writeQuery({
-                query: GET_POSTS_BY_TOPIC,
-                data: {postsByTopic: [...postsByTopic, createPost]},
-                variables: {
-                    slug: createPost.topic.slug
-                }
-            })
-        } catch (e) {
-            console.log(e);
-        }
-    }
-    });
+export const useCreatePost = () => useMutation(CREATE_POST);
+
+
+
+// , {
+//     async update(cache, {data: {createPost}}) {
+//         try {
+//             debugger
+//             await Object.keys(cache.data.data).forEach(key => {
+//                 debugger
+//                 key.match(/^Post/) && cache.data.delete(key);
+//             });
+//
+//         } catch(e) {}
+//     }
+// }
+
+
+// export const useCreatePost = () => useMutation(CREATE_POST, {
+//     update(cache, {data: {createPost}}) {
+//         try {
+//             const {postsByTopic} = cache.readQuery({query: GET_POSTS_BY_TOPIC, variables: {slug: createPost.topic.slug}});
+//             cache.writeQuery({
+//                 query: GET_POSTS_BY_TOPIC,
+//                 data: {postsByTopic: [...postsByTopic, createPost]},
+//                 variables: {
+//                     slug: createPost.topic.slug
+//                 }
+//             })
+//         } catch (e) {
+//             console.log(e);
+//         }
+//     }
+//     });
 
 //FORUM END
 

@@ -76,14 +76,14 @@ module.exports.forumQueries = {
         return ctx.models.ForumTopic.getBySlug(slug)
     },
 
-    postsByTopic: async (root, {slug}, ctx) => {
+    postsByTopic: async (root, {slug, pageNum, pageSize}, ctx) => {
         const topic = await ctx.models.ForumTopic.getBySlug(slug);
 
         if (!topic) {
             return null
         }
 
-        return ctx.models.Post.getAllByTopic(topic._id)
+        return ctx.models.Post.getAllByTopic(topic, pageNum, pageSize)
     }
 };
 
