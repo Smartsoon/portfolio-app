@@ -201,4 +201,4 @@ const CreateNewPortfolioForm = ({ onSubmit, defaultValues, loading}) => {
     )
 };
 
-export default withApollo(withAuth(CreateNewPortfolioForm, ['admin', 'instructor']), {getDataFromTree});
+export default withApollo(withAuth(CreateNewPortfolioForm, ['admin', 'instructor', 'guest']), {getDataFromTree});

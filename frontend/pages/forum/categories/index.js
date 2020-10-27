@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseLayout from "../../../layouts/baseLayout";
+import BaseLayout from "../../../layouts/BaseLayout";
 import {useGetForumCategories} from "../../../apollo/actions";
 import Spinner from "react-bootstrap/Spinner";
 import withApollo from "../../../hoc/withApollo";

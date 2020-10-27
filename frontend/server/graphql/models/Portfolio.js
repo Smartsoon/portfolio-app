@@ -1,9 +1,10 @@
-class Portfolio {
+const BaseModel = require('./BaseModel');
+
+class Portfolio extends BaseModel{
 
     constructor(model, user) {
-        this.Model = model;
-        this.user = user;
-        this.rolesWrhits = [ 'admin', 'instructor' ]
+        super(model, user);
+        this.rolesWrhits = [ 'admin', 'instructor', 'guest' ]
     }
 
     getAll() {

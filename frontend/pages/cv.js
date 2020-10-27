@@ -1,12 +1,15 @@
 import React from 'react';
-import BaseLayout from '@/layouts/baseLayout'
+import BaseLayout from '@/layouts/BaseLayout';
 
-const Cv = () => {
-    return (
-        <BaseLayout>
-            cv
-        </BaseLayout>
-    )
-};
+const Cv = () =>
+    <BaseLayout>
+        <div className="row mt-4">
+            <div className="col-md-8 offset-md-2">
+                <iframe src="" style={{width: '100%', height: '800px'}}>
+                </iframe>
+            </div>
+        </div>
+    </BaseLayout>
+
 
 export default Cv;

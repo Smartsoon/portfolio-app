@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useRouter} from 'next/router'
-import BaseLayout from "../../../layouts/baseLayout";
+import BaseLayout from "../../../layouts/BaseLayout";
 import {useGetForumTopicsByCategory, useGetUser, useCreateTopic} from "../../../apollo/actions";
 import withApollo from "../../../hoc/withApollo";
 import {getDataFromTree} from "@apollo/client/react/ssr";

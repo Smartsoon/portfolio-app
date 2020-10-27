@@ -1,11 +1,14 @@
-class User {
-    constructor(model) {
-        this.Model = model;
-    }
+const BaseModel = require('./BaseModel');
+
+class User extends BaseModel {
 
     async signUp(signUpData) {
         if(signUpData.password !== signUpData.passwordConfirmation) {
             throw new Error('Password field data must be the same as confirmation field data!')
+        }
+
+        if (!signUpData.avatar) {
+            signUpData.avatar = 'https://annam-finefood.com/wp-content/uploads/2016/09/no-avatar.png'
         }
 
         try {

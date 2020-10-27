@@ -38,6 +38,8 @@ module.exports.portfolioTypes = gql`
 
         postsByTopic(slug: String, pageNum: Int, pageSize: Int): PaginatedPosts
         
+        highlight(limit: Int): HighLigtnResponse
+        
     }
 
     type Mutation {
@@ -136,6 +138,12 @@ exports.forumTypes = gql`
         content: String
         topic: String
         parent: String
+    }
+    
+    
+    type HighLigtnResponse {
+        portfolios: [Portfolio]
+        topics: [ForumTopic]
     }
 `;
 

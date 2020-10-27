@@ -1,5 +1,5 @@
 import React from "react";
-import BaseLayout from "../../../layouts/baseLayout";
+import BaseLayout from "../../../layouts/BaseLayout";
 import {Card, Button} from 'react-bootstrap';
 import {useDeletePortfolio, useGetPortfolio, useGetUser, useGetUserPortfolios} from "../../../apollo/actions";
 import withApollo from '@/hoc/withApollo'
@@ -93,6 +93,6 @@ const instructorDashboard = withAuth(() => {
             </div>
         </BaseLayout>
     )
-}, ['admin', 'instructor'], {ssr: false});
+}, ['admin', 'instructor', 'guest'], {ssr: false});
 
 export default withApollo(instructorDashboard, {getDataFromTree});

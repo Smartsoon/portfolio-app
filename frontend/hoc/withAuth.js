@@ -1,7 +1,7 @@
 import React from "react";
 import {useGetUser} from '../apollo/actions/index';
 import Redirect from '../components/shared/redirect';
-import BaseLayout from "../layouts/baseLayout";
+import BaseLayout from "../layouts/BaseLayout";
 import Spinner from "react-bootstrap/Spinner";
 
 

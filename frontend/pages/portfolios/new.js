@@ -5,7 +5,7 @@ import {getDataFromTree} from "@apollo/client/react/ssr";
 import withAuth from "@/hoc/withAuth";
 import CreateNewPortfolioForm from "@/components/forms/createNewPortfolioForm";
 import {useCreatePortfolio} from '@/apollo/actions/index'
-import BaseLayout from "../../layouts/baseLayout";
+import BaseLayout from "../../layouts/BaseLayout";
 import {toast} from "react-toastify";
 
 
@@ -50,4 +50,4 @@ const CreateNewPortfolio = () => {
     )
 };
 
-export default withApollo(withAuth(CreateNewPortfolio, ['admin', 'instructor'], {ssr: false}), {getDataFromTree});
+export default withApollo(withAuth(CreateNewPortfolio, ['admin', 'instructor', 'guest'], {ssr: false}), {getDataFromTree});

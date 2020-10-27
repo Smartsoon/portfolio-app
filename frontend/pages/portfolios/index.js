@@ -4,9 +4,7 @@ import withApollo from '@/hoc/withApollo'
 import {getDataFromTree} from "@apollo/client/react/ssr";
 import {useGetPortfolio} from '@/apollo/actions/index'
 import PortfolioCard from "@/components/portfolio";
-import AppLink from "../../components/shared/appLink";
-import BaseLayout from "../../layouts/baseLayout";
-import withAuth from "../../hoc/withAuth";
+import BaseLayout from "../../layouts/BaseLayout";
 import Spinner from "react-bootstrap/Spinner";
 
 

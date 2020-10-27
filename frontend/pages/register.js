@@ -1,14 +1,10 @@
 import React from 'react';
 import RegisterForm from '../components/forms/registerForm';
-import {Mutation} from "@apollo/client/react/components";
 import withApollo from '@/hoc/withApollo'
 import {getDataFromTree} from "@apollo/client/react/ssr";
-import Redirect from '@/components/shared/redirect'
 import authMutations from '../apollo/mutations/authentication/index';
-import LoginForm from "../components/forms/loginForm";
-import {useSignIn} from "../apollo/actions";
 import {useMutation} from "@apollo/client";
-import BaseLayout from "../layouts/baseLayout";
+import BaseLayout from "../layouts/BaseLayout";
 import {toast} from "react-toastify";
 import {useRouter} from "next/router";
 
@@ -50,17 +46,3 @@ const Register = () => {
 };
 
 export default withApollo(Register, {getDataFromTree});
-
-
-/*<Mutation mutation={SIGN_UP}>*/
-/*    {*/
-/*        (signUpUser, {data, error}) =>*/
-/*            <>*/
-/*                <RegisterForm onSubmit={registerData => {*/
-/*                    signUpUser({variables: registerData})*/
-/*                }}/>*/
-/*                { data && data.signUp && <Redirect to="/login"/> }*/
-/*                { error && <div className="alert alert-danger">{errorMessage(error)}</div> }*/
-/*            </>*/
-/*    }*/
-/*</Mutation>*/

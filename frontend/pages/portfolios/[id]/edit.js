@@ -2,7 +2,7 @@ import React from "react";
 import {useRouter} from "next/router";
 import withApollo from "../../../hoc/withApollo";
 import withAuth from "../../../hoc/withAuth";
-import BaseLayout from "../../../layouts/baseLayout";
+import BaseLayout from "../../../layouts/BaseLayout";
 import {useGetPortfolioById, useUpdatePortfolio} from "../../../apollo/actions";
 import CreateNewPortfolioForm from "../../../components/forms/createNewPortfolioForm";
 import {getDataFromTree} from "@apollo/client/react/ssr";
@@ -64,4 +64,4 @@ const PortfolioEdit = () => {
     )
 };
 
-export default withApollo(withAuth(PortfolioEdit, ['admin', 'instructor'], {ssr: false}), {getDataFromTree});
+export default withApollo(withAuth(PortfolioEdit, ['admin', 'instructor', 'guest'], {ssr: false}), {getDataFromTree});

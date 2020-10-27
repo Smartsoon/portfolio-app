@@ -17,3 +17,13 @@ export const setDaysOfExperience = (startDate, endDate) => {
 export const fromNow = (date) => {
     return moment.unix(date / 1000).fromNow()
 };
+
+export const shortify = (text, maxLength) => {
+    if (!text) {
+        return ""
+    }
+    if (text.length <= maxLength) {
+        return text
+    }
+    return text.substr(0, maxLength) + "...";
+};

@@ -24,7 +24,7 @@ const AppNavbar = () => {
         setIsMounted(false)
     }, []);
 
-    const userRoles = ['admin', 'instructor'];
+    const userRoles = ['admin', 'instructor', 'guest'];
 
     const router = useRouter();
 
@@ -55,9 +55,9 @@ const AppNavbar = () => {
                     <AppLink href="/forum/categories" className="mr-3 nav-link">
                         Forum
                     </AppLink>
-                    <AppLink href="/cv" className="mr-3 nav-link">
-                        Cv
-                    </AppLink>
+                    {/*<AppLink href="/cv" className="mr-3 nav-link">*/}
+                    {/*    Cv*/}
+                    {/*</AppLink>*/}
                 </Nav>
 
                 {

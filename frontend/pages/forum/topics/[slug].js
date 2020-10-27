@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {useRouter} from 'next/router'
-import BaseLayout from "../../../layouts/baseLayout";
+import BaseLayout from "../../../layouts/BaseLayout";
 import {useGetPostsByTopic, useGetTopicBySlug, useGetUser, useCreatePost} from "../../../apollo/actions";
 import Spinner from "react-bootstrap/Spinner";
 import withApollo from "../../../hoc/withApollo";
@@ -15,6 +15,7 @@ const useInitialData = (slug, pagination) => {
     const topic = data && data.topicBySlug || {};
     const {data: topicsFromServer, loading: {postsLoading}, fetchMore} = useGetPostsByTopic({
         variables: {slug, ...pagination},
+        fetchPolicy: 'network-only',
         pollInterval: 20000,
     });
     const postsData = (topicsFromServer && topicsFromServer.postsByTopic) || {posts: [], count: 0};

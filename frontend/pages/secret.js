@@ -1,8 +1,7 @@
 import React from 'react';
 import withApollo from '@/hoc/withApollo'
-import {getDataFromTree} from "@apollo/client/react/ssr";
 import withAuth from "@/hoc/withAuth";
-import BaseLayout from "../layouts/baseLayout";
+import BaseLayout from "../layouts/BaseLayout";
 
 const Secret = withAuth(() => {
 

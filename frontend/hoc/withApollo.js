@@ -40,7 +40,7 @@ function initApolloClient(initialState) {
     if (!globalApolloClient) {
         globalApolloClient = new ApolloClient({
             link: new HttpLink({
-                    uri: "http://localhost:3000/graphql",
+                    uri: process.env.BASE_URL,
                     fetch
                 }),
             request: (operationObj) => {

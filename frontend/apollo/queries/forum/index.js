@@ -83,6 +83,32 @@ const forumQueries = {
                 count
             }
         }
+    `,
+
+    HIGHLIGHT: gql`
+        query HighLight($limit: Int) {
+            highlight(limit: $limit) {
+                topics {
+                    _id
+                    title
+                    content
+                    slug
+                    user {
+                        username
+                        avatar
+                    }
+                    createdAt
+                }
+                portfolios {
+                    _id
+                    title
+                    description
+                    jobTitle
+                    startDate
+                    endDate
+                }
+            }
+        }
     `
 };
 

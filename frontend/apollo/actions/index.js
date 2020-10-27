@@ -7,7 +7,7 @@ import authQueries from '@/apollo/queries/authQueries/index';
 const { GET_AUTH_USER } = authQueries;
 
 import forumQueries from "@/apollo/queries/forum/index";
-const { GET_FORUM_CATEGORIES, GET_TOPICS_BY_CATEGORY, GET_TOPIC_BY_SLUG, GET_POSTS_BY_TOPIC } = forumQueries;
+const { GET_FORUM_CATEGORIES, GET_TOPICS_BY_CATEGORY, GET_TOPIC_BY_SLUG, GET_POSTS_BY_TOPIC, HIGHLIGHT } = forumQueries;
 
 import forumMutations from "@/apollo/mutations/forum/index";
 const { CREATE_TOPIC, CREATE_POST } = forumMutations;
@@ -126,7 +126,13 @@ export const useCreateTopic = () => useMutation(CREATE_TOPIC, {
 });
 
 export const useCreatePost = () => useMutation(CREATE_POST);
+//FORUM END
 
+
+//HIGHLIGHT
+export const useGetHighlights = (options) => useQuery(HIGHLIGHT, options);
+
+//HIGHLIGHT END
 
 
 // , {

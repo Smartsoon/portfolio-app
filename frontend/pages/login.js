@@ -2,8 +2,7 @@ import React from 'react';
 import withApollo from '@/hoc/withApollo'
 import LoginForm from "../components/forms/loginForm";
 import {useSignIn} from '../apollo/actions/index';
-import Redirect from '@/components/shared/redirect'
-import BaseLayout from "../layouts/baseLayout";
+import BaseLayout from "../layouts/BaseLayout";
 import duplicateLoginProtection from "../hoc/duplicateLoginProtection";
 import {toast} from "react-toastify";
 import {useRouter} from "next/router";

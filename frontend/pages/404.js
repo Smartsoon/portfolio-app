@@ -1,5 +1,5 @@
 import React from "react";
-import BaseLayout from "../layouts/baseLayout";
+import BaseLayout from "../layouts/BaseLayout";
 
 const ErrorPage = () => {
     return (
